@@ -1,0 +1,16 @@
+.Appp {
+  /* display: flex; */
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+  
+  /* background-color: black; */
+}
+h1 {
+  /* color: linear-gradient(bottom left to top right, #7EDEFB, #ABE2F7, #00ABFF); */
+  color: #DAAD86;
+  font-family:'Times New Roman', Times, serif;
+}

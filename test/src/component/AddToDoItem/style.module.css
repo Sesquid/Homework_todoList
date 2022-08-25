@@ -1,0 +1,48 @@
+.Add {
+    position: absolute;
+    bottom: 100px;
+    margin-top: 30px;
+    border:#e3cab4 2px solid;
+}
+.AddItem {
+    margin: 10px 0;
+    width: 474px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.Addinput {
+    border: none;
+    width: 380px;
+    padding: 0 10px;
+}
+.Addinput:focus {
+    outline: none;
+    border: 2px solid rgba(200, 155, 100, 1.9);
+}
+.Addinput,
+.Addinput::placeholder {
+    color: #DAAD86;
+}
+.AddBtn {
+    height: 30px;
+    width: 50px;
+    background-color: #DAAD86;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: white;
+    /* border-radius: 50%; */
+    cursor: pointer;
+}
+.AddBtn:hover {
+    background-color: #c39a76;
+}
+.title {
+    font-size: 1.6rem;
+    color: #DAAD86;
+    font-family:'Times New Roman', Times, serif;
+}
