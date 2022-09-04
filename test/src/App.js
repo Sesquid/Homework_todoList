@@ -218,16 +218,90 @@
 // }
 // export default App;
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ToDoList from "./component/ToDoList/index"
 import "./App.css"
+import AddToDoItem from './component/AddToDoItem/AddToDoItem';
+import axiosinstance from './api/axiosinstance';
+
+const todos = [
+    { id: "1", name: "Python", isDone: false, },
+    { id: "2", name: "Java", isDone: false, },
+    { id: "3", name: "React", isDone: false, },
+    { id: "4", name: "Database", isDone: false, },
+    { id: "5", name: "Algorithm", isDone: false, },
+];
+
 const App = () => {
+    const [toDos, setToDos] = useState(todos);
+
+    const addToDo = (name) => {
+        // const id = Date.now();
+        const newToDo = { name: name, isDone: false }
+        axiosinstance
+            .post("/todos", newToDo)
+            .then((response) => {
+                setToDos((toDos) => [response.data, ...toDos]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // console.log(toDos)
+    }
+
+    const deleteToDo = (todo) => {
+        axiosinstance
+            .delete(`/todos/${todo.id}`)
+            .then((response) => {
+                setToDos((toDos) => [...toDos.filter((ele) => ele.id !== todo.id)]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // setToDos((toDos) => toDos.filter((ele) => ele.id !== todo.id));
+
+    };
+
+    const completeToDo = (todo) => {
+
+        todo.isDone = !todo.isDone;
+        axiosinstance
+            .put(`/todos/${todo.id}`, todo)
+            .then((res) => {
+                setToDos((toDos) => toDos.map(
+                    (ele) => (ele.id === res.data.id ? { ...res.data } : ele)
+                ))
+            })
+            .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                const url = "/todos"
+                const response = await axiosinstance.get(url);
+
+                const { data } = response;
+                setToDos(data)
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        fetch();
+    }, [])
 
     return (
-        
         <div className='Appp'>
-            <h1>Your List:</h1>
-            <ToDoList />
+            <h1>TodoList:</h1>
+            <AddToDoItem addToDo={addToDo} />
+
+            <ToDoList
+                deleteToDo={deleteToDo}
+                onChangeBox={completeToDo}
+                todoList={toDos}
+            />
         </div>
 
     )
